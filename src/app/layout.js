@@ -1,5 +1,6 @@
 import "./globals.css";
 import "./public.css";
+import "./editor.css";
 
 export const metadata = {
   title: "JoyeriaPro | Gestión comercial para joyerías",
@@ -14,3 +15,4 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+
