@@ -8,6 +8,7 @@ export function tabsFor(role) {
   const tabs = [["overview", "Resumen"], ["products", "Productos"], ["categories", "Categorías"], ["inventory", "Inventario"], ["customers", "Clientes"]];
   if (canSell(role)) tabs.push(["sales", "Ventas"]);
   if (canManage(role)) tabs.push(["users", "Usuarios y permisos"]);
-  if (canEditSettings(role)) tabs.push(["settings", "Configuración"]);
+  if (canEditSettings(role)) tabs.push(["settings", "Configuración"], ["editor", "Editor visual"]);
   return tabs;
 }
+
