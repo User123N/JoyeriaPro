@@ -10,11 +10,11 @@ copy .env.example .env.local
 npm run dev
 ```
 
-Variables requeridas: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` y opcionalmente `SUPABASE_SERVICE_ROLE_KEY` sólo en servidor. Ejecuta `supabase/migrations/001_core.sql`, luego `002_security.sql` y finalmente `supabase/setup_first_owner.sql` en un proyecto Supabase nuevo.
+Variables requeridas: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` y `SUPABASE_SERVICE_ROLE_KEY` sólo en servidor para `/superadmin`. Ejecuta `supabase/migrations/001_core.sql`, luego `002_security.sql`, asigna el rol con `supabase/setup_superadmin.sql` y entra a `/superadmin`.
 
 ## Módulos
 
-Dashboard, productos, categorías, inventario y movimientos, clientes, ventas, configuración del negocio y usuarios/permisos con roles owner, admin, manager, seller y viewer. No contiene empleados, citas, reservas ni pedidos.
+Dashboard, productos, categorías, inventario y movimientos, clientes, ventas, configuración del negocio y usuarios/permisos con roles owner, admin, manager, seller y viewer. El propietario de plataforma administra las joyerías desde `/superadmin` y puede crear el negocio y su cuenta propietaria en una sola operación.
 
 ## Validación
 
