@@ -1,6 +1,7 @@
 import "./globals.css";
 import "./public.css";
 import "./editor.css";
+import "./dashboard.css";
 
 export const metadata = {
   title: "JoyeriaPro | Gestión comercial para joyerías",
