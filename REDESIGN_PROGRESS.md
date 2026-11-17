@@ -151,3 +151,11 @@ Actualización preparada en la rama `feat/luxury-atelier-complete`.
 - Se añadieron pruebas unitarias de plantillas, compatibilidad con configuraciones antiguas, colores y URLs de imagen.
 - Build, lint, pruebas automáticas, QA responsive y pruebas con cuentas conectadas a Supabase siguen pendientes de ejecución en entorno local/CI.
 - No fusionar esta rama hasta completar esa verificación.
+
+### Build verificado en preview
+- Commit verificado: c66f6465a532f4ce4a3bb5f1afa7213e2c65ae6e.
+- Vercel: READY; check GitHub: success.
+- npm run test ejecutado antes de next build: 10/10 aprobadas, 0 fallidas.
+- Next.js: compilación correcta; lint/check de tipos en build; 14/14 páginas estáticas generadas.
+- Landing, login, recuperar contraseña y restablecer contraseña responden HTTP 200 en preview.
+- Falta QA visual interactiva y validación de datos/sesiones reales en Supabase.
