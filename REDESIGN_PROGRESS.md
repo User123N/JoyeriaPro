@@ -120,3 +120,34 @@ La escena utiliza transformaciones CSS 3D y geometría facetada en el navegador;
 - No se ejecutó `npm install`, `npm run build`, el servidor local ni Playwright desde esta conexión a GitHub.
 - Falta validar compilación, hidratación, render en navegador, breakpoints y el comportamiento conectado a Supabase con credenciales locales.
 - No se afirma que las pruebas visuales o funcionales hayan pasado. Ejecutarlas en el entorno local antes de fusionar.
+
+
+---
+
+## Nueva dirección — Luxury Digital Atelier
+
+Actualización preparada en la rama `feat/luxury-atelier-complete`.
+
+### Dirección visual
+- Tres plantillas públicas por tienda: Noir Atelier, Champagne Studio y Modern Gallery.
+- Configuración JSONB ampliada de forma compatible: plantilla, portada HTTPS, contenido de historia y visibilidad de secciones.
+- El editor conserva los campos existentes y agrega selección de plantilla, imagen, textos de marca, colores y controles de secciones.
+- La landing y las pantallas de autenticación usan ahora el componente WebGL.
+
+### 3D
+- Se añadió `src/components/WebGLJewelScene.js`, que genera geometría de malla para un anillo, gema facetada y engastes, con iluminación GLSL y rotación por puntero.
+- No requiere paquete 3D adicional.
+- Dispone de fallback estático y respeta `prefers-reduced-motion`.
+- Precisión: es geometría WebGL procedural; no es un GLB escaneado ni una fotografía 3D de producto.
+
+### Administración y datos
+- Dashboard: resumen de catálogo, gráfico de ventas pagadas de siete días en la zona horaria del negocio y alertas de stock bajo.
+- Productos, categorías y clientes: ahora permiten editar registros existentes además de crear y eliminar.
+- Configuración: nombre, descripción, teléfono, dirección y ciudad se guardan.
+- Las estadísticas reflejan los registros recientes cargados por el panel (límite actual de 100 por conjunto), no un informe contable histórico.
+- No se modificaron migraciones, tablas, funciones SQL, políticas RLS, credenciales ni datos de Supabase.
+
+### Verificación
+- Se añadieron pruebas unitarias de plantillas, compatibilidad con configuraciones antiguas, colores y URLs de imagen.
+- Build, lint, pruebas automáticas, QA responsive y pruebas con cuentas conectadas a Supabase siguen pendientes de ejecución en entorno local/CI.
+- No fusionar esta rama hasta completar esa verificación.
