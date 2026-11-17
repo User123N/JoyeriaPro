@@ -25,9 +25,9 @@ export default function JewelScene({ className = "" }) {
       frame = 0;
       const rect = scene.getBoundingClientRect();
       const progress = Math.min(1, Math.max(0, (window.innerHeight - rect.top) / (window.innerHeight + rect.height)));
-      scene.style.setProperty("--pointer-x", String(pointerX));
-      scene.style.setProperty("--pointer-y", String(pointerY));
-      scene.style.setProperty("--scroll-progress", String(progress));
+      scene.style.setProperty("--tilt-x", `${(pointerY * -7 + 2).toFixed(2)}deg`);
+      scene.style.setProperty("--tilt-y", `${(pointerX * 10 - 12).toFixed(2)}deg`);
+      scene.style.setProperty("--parallax-y", `${((0.5 - progress) * 22).toFixed(2)}px`);
     };
 
     const schedule = () => {
