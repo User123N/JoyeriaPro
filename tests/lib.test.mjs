@@ -28,3 +28,42 @@ test("safeNext bloquea redirecciones externas", () => {
   }
   assert.equal(safeNext("/dashboard?b=1"), "/dashboard?b=1");
 });
+
+import { STORE_TEMPLATES, normalizeSiteConfig, safeExternalImage } from "../src/lib/store-themes.js";
+
+test("JoyeriaPro ofrece exactamente tres plantillas de tienda", () => {
+  assert.deepEqual(STORE_TEMPLATES.map((item) => item.id), ["noir", "champagne", "modern"]);
+});
+
+test("las tiendas existentes reciben valores por defecto sin perder su texto", () => {
+  const config = normalizeSiteConfig(
+    { heroTitle: "Casa Aurora", tagline: "Piezas que perduran" },
+    { name: "Aurora", description: "Joyería artesanal" }
+  );
+  assert.equal(config.template, "noir");
+  assert.equal(config.heroTitle, "Casa Aurora");
+  assert.equal(config.tagline, "Piezas que perduran");
+  assert.equal(config.heroDescription, "Joyería artesanal");
+  assert.equal(config.sections.catalog, true);
+});
+
+test("la configuración rechaza plantillas y colores no válidos", () => {
+  const config = normalizeSiteConfig({
+    template: "custom-script",
+    accent: "url(javascript:alert(1))",
+    background: "#fff",
+    sections: { catalog: false }
+  }, { name: "Aurora" });
+  assert.equal(config.template, "noir");
+  assert.equal(config.accent, "#c8a56a");
+  assert.equal(config.background, "#fff");
+  assert.equal(config.sections.catalog, false);
+  assert.equal(config.sections.story, true);
+});
+
+test("las imágenes de portada solo aceptan HTTPS", () => {
+  assert.equal(safeExternalImage("https://cdn.example.com/cover.webp"), "https://cdn.example.com/cover.webp");
+  assert.equal(safeExternalImage("http://example.com/cover.webp"), "");
+  assert.equal(safeExternalImage("javascript:alert(1)"), "");
+  assert.equal(safeExternalImage("not-a-url"), "");
+});

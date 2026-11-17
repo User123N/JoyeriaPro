@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import Brand from "@/components/Brand";
 import LoginForm from "./login-form";
-import JewelScene from "@/components/JewelScene";
+import WebGLJewelScene from "@/components/WebGLJewelScene";
 
 export const metadata = { title: "Acceder | JoyeriaPro" };
 
@@ -10,7 +10,7 @@ export default function LoginPage() {
     <>
       <header className="shell topbar"><Brand /><span className="muted" style={{fontSize:12}}>Acceso seguro</span></header>
       <main className="shell auth-wrap auth-split">
-        <div className="auth-art"><JewelScene className="jp-jewel-scene--auth" /><p>Tu inventario, tus clientes y tus ventas en un solo lugar.</p></div>
+        <div className="auth-art"><WebGLJewelScene className="jp-webgl-jewel--auth" /><p>Tu inventario, tus clientes y tus ventas en un solo lugar.</p></div>
         <section className="auth-card">
           <div className="eyebrow">Bienvenido de nuevo</div>
           <h1 style={{fontSize:34,margin:"12px 0"}}>Inicia sesión.</h1>
