@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Brand from "@/components/Brand";
+import JewelScene from "@/components/JewelScene";
 
 const shots = [
   "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1800&q=85",
@@ -52,6 +53,7 @@ export default function Home() {
       <div className="home-hero-image"><Image src={shots[0]} alt="Joyería fina en una composición editorial" fill priority sizes="100vw" unoptimized /></div>
       <div className="home-hero-shade" />
       <div className="home-hero-glow" aria-hidden="true" />
+      <JewelScene className="jp-jewel-scene--home" />
       <div className="shell home-hero-content">
         <div className="eyebrow"><i /> PLATAFORMA SAAS PARA JOYERÍAS</div>
         <h1>El arte de exhibir<br /><em>lo extraordinario.</em></h1>
@@ -61,7 +63,6 @@ export default function Home() {
           <a href="#plataforma" className="btn home-outline">Conocer características <span aria-hidden="true">↓</span></a>
         </div>
       </div>
-      <div className="home-hero-orbit" aria-hidden="true">✧</div>
       <div className="home-hero-foot shell"><span>DISEÑO · DETALLE · DISTINCIÓN</span><span>01 / JOYERIAPRO</span></div>
     </section>
 
