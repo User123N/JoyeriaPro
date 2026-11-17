@@ -1,0 +1,288 @@
+/* JoyeriaPro — immersive CSS 3D + glass interface layer.
+   Loaded last so existing business logic and route styles remain untouched. */
+
+.jp-jewel-scene {
+  --pointer-x: 0;
+  --pointer-y: 0;
+  --scroll-progress: .5;
+  position: absolute;
+  z-index: 1;
+  width: min(38vw, 520px);
+  aspect-ratio: 1;
+  perspective: 1100px;
+  transform-style: preserve-3d;
+  pointer-events: none;
+  contain: layout paint;
+  isolation: isolate;
+}
+.jp-jewel-aura {
+  position: absolute;
+  inset: 13%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245, 211, 128, .2), rgba(183, 137, 42, .08) 38%, transparent 72%);
+  filter: blur(14px);
+  transform: translateZ(-70px);
+}
+.jp-jewel-stage {
+  position: absolute;
+  inset: 5%;
+  transform-style: preserve-3d;
+  transform: translate3d(0, calc((.5 - var(--scroll-progress)) * 22px), 0)
+    rotateX(calc(var(--pointer-y) * -7deg + 2deg))
+    rotateY(calc(var(--pointer-x) * 10deg - 12deg));
+  transition: transform 500ms cubic-bezier(.2, .7, .1, 1);
+}
+.jp-jewel-orbit {
+  position: absolute;
+  left: 8%;
+  top: 22%;
+  width: 84%;
+  height: 58%;
+  border: 1px solid rgba(231, 202, 133, .38);
+  border-radius: 50%;
+  transform-style: preserve-3d;
+  box-shadow: 0 0 24px rgba(212, 175, 55, .1), inset 0 0 16px rgba(212, 175, 55, .05);
+}
+.jp-jewel-orbit--outer {
+  transform: rotateX(67deg) rotateZ(-28deg) translateZ(-40px);
+  animation: jp-orbit-turn 34s linear infinite;
+}
+.jp-jewel-orbit--inner {
+  left: 17%;
+  top: 15%;
+  width: 68%;
+  height: 70%;
+  border-color: rgba(255, 238, 193, .2);
+  transform: rotateX(72deg) rotateZ(48deg) translateZ(22px);
+  animation: jp-orbit-turn-reverse 42s linear infinite;
+}
+.jp-jewel-orbit--satellite {
+  left: 18%;
+  top: 12%;
+  width: 64%;
+  height: 76%;
+  border-style: dashed;
+  border-color: rgba(212, 175, 55, .19);
+  transform: rotateY(67deg) rotateZ(-22deg) translateZ(-10px);
+}
+.jp-jewel-object {
+  position: absolute;
+  left: 21%;
+  top: 13%;
+  width: 58%;
+  height: 72%;
+  transform-style: preserve-3d;
+  animation: jp-jewel-float 7s ease-in-out infinite;
+  filter: drop-shadow(0 30px 35px rgba(0, 0, 0, .38));
+}
+.jp-jewel-shadow {
+  position: absolute;
+  left: 14%;
+  right: 12%;
+  bottom: 2%;
+  height: 18%;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, .55);
+  filter: blur(18px);
+  transform: rotateX(75deg) translateZ(-65px);
+}
+.jp-jewel-ring {
+  position: absolute;
+  left: 12%;
+  top: 45%;
+  width: 76%;
+  height: 42%;
+  border: 11px solid #8f6c27;
+  border-top-color: #fff0bd;
+  border-left-color: #c6a354;
+  border-right-color: #f0d58c;
+  border-bottom-color: #5e471d;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: inset 0 0 8px rgba(255, 243, 203, .65), 0 0 20px rgba(212, 175, 55, .18);
+  transform: rotateX(68deg) rotateZ(-18deg) translateZ(-24px);
+}
+.jp-jewel-setting {
+  position: absolute;
+  left: 34%;
+  top: 26%;
+  width: 32%;
+  height: 27%;
+  border: 3px solid #d9b968;
+  border-radius: 45% 45% 34% 34%;
+  background: linear-gradient(135deg, rgba(255, 241, 194, .9), rgba(113, 83, 28, .9) 55%, rgba(235, 206, 133, .8));
+  box-shadow: 0 0 22px rgba(222, 185, 96, .35), inset 0 0 9px rgba(255, 255, 255, .5);
+  transform: translateZ(30px) rotateX(-8deg);
+}
+.jp-jewel-stone {
+  position: absolute;
+  z-index: 2;
+  left: 31%;
+  top: 3%;
+  width: 38%;
+  height: 39%;
+  overflow: hidden;
+  clip-path: polygon(50% 0, 86% 17%, 100% 47%, 50% 100%, 0 47%, 14% 17%);
+  background: linear-gradient(135deg, #fff8df 0%, #d8c18b 20%, #fffdf2 33%, #9c7d3d 54%, #f5e8c0 76%, #8b6a2b 100%);
+  box-shadow: 0 0 32px rgba(255, 226, 150, .4);
+  transform: translateZ(60px) rotateY(-10deg) rotateX(8deg);
+}
+.jp-jewel-facet { position: absolute; display: block; }
+.jp-jewel-facet--left {
+  inset: 0 auto 0 0;
+  width: 50%;
+  clip-path: polygon(28% 17%, 100% 17%, 100% 100%, 0 47%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, .95), rgba(153, 119, 55, .76));
+}
+.jp-jewel-facet--right {
+  inset: 0 0 0 auto;
+  width: 50%;
+  clip-path: polygon(0 17%, 72% 17%, 100% 47%, 0 100%);
+  background: linear-gradient(225deg, rgba(255, 255, 255, .92), rgba(111, 82, 33, .75));
+}
+.jp-jewel-facet--bottom {
+  inset: 17% 0 0;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  background: linear-gradient(180deg, rgba(255, 244, 209, .42), rgba(70, 52, 24, .36));
+}
+.jp-jewel-facet--table {
+  left: 28%;
+  top: 0;
+  width: 44%;
+  height: 24%;
+  clip-path: polygon(50% 0, 100% 70%, 0 70%);
+  background: linear-gradient(90deg, #fff, #fff1c6, #b18a3f);
+}
+.jp-jewel-prong {
+  position: absolute;
+  z-index: 3;
+  top: 15%;
+  width: 5px;
+  height: 17%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #8c6a29, #fff0b7, #a77c30);
+  box-shadow: 0 0 8px rgba(255, 232, 174, .45);
+  transform: translateZ(72px);
+}
+.jp-jewel-prong--left { left: 30%; transform: translateZ(72px) rotate(-18deg); }
+.jp-jewel-prong--right { right: 30%; transform: translateZ(72px) rotate(18deg); }
+.jp-jewel-prong--top { left: calc(50% - 2px); top: 8%; height: 12%; transform: translateZ(72px); }
+.jp-jewel-spark {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fff4ce;
+  box-shadow: 0 0 12px 4px rgba(242, 210, 132, .55);
+  transform: translateZ(95px);
+  animation: jp-spark-pulse 3s ease-in-out infinite alternate;
+}
+.jp-jewel-spark--one { top: 24%; left: 20%; }
+.jp-jewel-spark--two { right: 17%; top: 42%; width: 5px; height: 5px; animation-delay: .8s; }
+.jp-jewel-spark--three { left: 24%; bottom: 21%; width: 4px; height: 4px; animation-delay: 1.4s; }
+.jp-jewel-scene--home { top: 3%; right: 2%; width: min(43vw, 590px); }
+.jp-jewel-scene--store { top: 7%; right: 5%; width: min(37vw, 450px); opacity: .84; }
+.jp-jewel-scene--auth {
+  position: relative;
+  left: auto;
+  right: auto;
+  top: auto;
+  width: min(78%, 310px);
+  margin: 0 auto -1rem;
+  opacity: .92;
+}
+@keyframes jp-jewel-float {
+  0%, 100% { transform: translateY(0) rotateZ(-2deg); }
+  50% { transform: translateY(-13px) rotateZ(2deg); }
+}
+@keyframes jp-orbit-turn { to { rotate: 360deg; } }
+@keyframes jp-orbit-turn-reverse { to { rotate: -360deg; } }
+@keyframes jp-spark-pulse { from { opacity: .4; scale: .75; } to { opacity: 1; scale: 1.2; } }
+
+/* Rounded glass language across the product */
+.btn, .jp-btn { border-radius: 999px; }
+.btn { box-shadow: 0 7px 24px rgba(0, 0, 0, .16); }
+.btn.primary { box-shadow: 0 9px 28px rgba(198, 159, 68, .18); }
+.btn:focus-visible { outline-offset: 4px; }
+
+.home-header, .topbar {
+  backdrop-filter: blur(22px) saturate(145%);
+  -webkit-backdrop-filter: blur(22px) saturate(145%);
+}
+.home-header { border-radius: 0 0 20px 20px; }
+.home-panel-frame, .home-shot, .home-editorial-image, .capability {
+  border-radius: 22px;
+}
+.home-panel-frame { background: rgba(12, 13, 18, .68); backdrop-filter: blur(18px); }
+.home-panel-side, .hp-stat, .hp-rows span {
+  border-radius: 13px;
+}
+.home-panel-side { background: rgba(255, 255, 255, .028); }
+.capability {
+  background: linear-gradient(150deg, rgba(255,255,255,.055), rgba(255,255,255,.012));
+  backdrop-filter: blur(12px);
+}
+.home-shot { border: 1px solid rgba(255,255,255,.1); overflow: hidden; }
+.home-shot img { transition: transform 900ms cubic-bezier(.2,.7,.1,1), filter 500ms ease; }
+.home-shot:hover img { transform: scale(1.06) translateY(-1%); }
+.category-card { border-radius: 18px; }
+.category-cards { gap: .75rem; background: transparent; border: 0; }
+.public-product {
+  padding: .55rem .55rem 1rem;
+  border: 1px solid rgba(255,255,255,.075);
+  border-radius: 20px;
+  background: linear-gradient(155deg, rgba(255,255,255,.045), rgba(255,255,255,.008));
+  transition: transform 360ms cubic-bezier(.2,.7,.1,1), border-color 360ms ease, box-shadow 360ms ease;
+}
+.public-product:hover {
+  transform: translateY(-6px);
+  border-color: color-mix(in srgb, var(--site-accent) 42%, transparent);
+  box-shadow: 0 24px 60px rgba(0,0,0,.34);
+}
+.product-image-button { border-radius: 15px; }
+.product-dialog { border-radius: 24px; overflow: auto; box-shadow: 0 40px 140px rgba(0,0,0,.6); }
+.dialog-image { overflow: hidden; }
+.store-header { border-radius: 0 0 18px 18px; }
+.store-contact { isolation: isolate; overflow: hidden; }
+.contact-orbit { animation: jp-orbit-turn 55s linear infinite; }
+.home-cta { overflow: hidden; }
+.home-cta::before {
+  content: "";
+  position: absolute;
+  width: min(60vw, 680px);
+  aspect-ratio: 1;
+  top: -48%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  border: 1px solid rgba(212,175,55,.14);
+  box-shadow: 0 0 90px rgba(212,175,55,.08), inset 0 0 90px rgba(212,175,55,.06);
+  pointer-events: none;
+}
+.home-hero-content, .store-hero-copy { z-index: 2; }
+.home-hero-foot { z-index: 2; }
+.store-hero-copy { width: min(100%, 1320px); }
+.auth-art { isolation: isolate; border-radius: 26px; }
+.auth-art p { z-index: 2; }
+.auth-card { border-radius: 24px; background: rgba(15,16,21,.78); backdrop-filter: blur(20px) saturate(135%); }
+.auth-art-compact { min-height: 340px; }
+.topbar { border-radius: 0 0 18px 18px; }
+
+@media (max-width: 960px) {
+  .jp-jewel-scene--home { top: 2%; right: 0; width: min(44vw, 330px); opacity: .55; }
+  .jp-jewel-scene--store { top: 8%; right: -3%; width: min(42vw, 330px); opacity: .48; }
+}
+@media (max-width: 620px) {
+  .jp-jewel-scene--home { top: 7%; right: -42px; width: 225px; opacity: .34; }
+  .jp-jewel-scene--store { top: 8%; right: -58px; width: 230px; opacity: .3; }
+  .jp-jewel-scene--auth { width: 190px; margin-bottom: -.8rem; }
+  .auth-art-compact { min-height: 230px; }
+  .auth-art-compact p { font-size: .9rem; }
+  .home-panel-frame, .home-shot, .home-editorial-image { border-radius: 16px; }
+  .public-products { gap: 1rem .65rem; }
+  .public-product { padding: .4rem .4rem .8rem; border-radius: 15px; }
+  .product-image-button { border-radius: 11px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .jp-jewel-stage, .jp-jewel-object, .jp-jewel-orbit, .jp-jewel-spark, .contact-orbit { animation: none !important; transition: none !important; }
+}
