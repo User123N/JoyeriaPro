@@ -1,7 +1,10 @@
 :root {
   color-scheme: dark;
   --bg-main: #080808;
+  --bg: #080808;
   --surface: #11100e;
+  --card: #141414;
+  --text: #f5f1e8;
   --text-main: #f5f1e8;
   --text-muted: #aaa49a;
   --gold: #c5a059;
