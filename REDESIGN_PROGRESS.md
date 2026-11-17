@@ -96,3 +96,27 @@ Bugs reales encontrados en las capturas y corregidos:
 4. **Sin 3D real**: no se añadió three.js ni assets GLB; los ornamentos son CSS.
 5. **Sin pruebas con datos reales de tenants**: estilos y layout están verificados, pero el
    comportamiento con catálogos largos, imágenes caídas o textos extremos no se probó en vivo.
+
+
+---
+
+## Seguimiento de implementación — rama `redesign/complete-futuristic-luxury`
+
+### Cambios aplicados en esta continuación
+
+- Añadido `src/components/JewelScene.js`: escena de gema con geometría CSS 3D, anillo metálico, facetas, órbitas y reflejos.
+- Añadido parallax reactivo a puntero y desplazamiento, con `requestAnimationFrame`, limpieza de listeners y respeto a `prefers-reduced-motion`.
+- Integrada la escena en la landing, en la cabecera de cada tienda dinámica y en las pantallas de inicio de sesión, recuperación y cambio de contraseña.
+- Añadido `src/app/experience.css), importado desde el layout global, para redondear controles y superficies e incorporar una capa visual de glassmorphism a landing, catálogo, tienda, dashboard y superadministración.
+- No se añadieron paquetes ni se tocaron las migraciones SQL, políticas RLS, consultas, autenticación ni archivos de configuración de Supabase.
+
+### Precisión sobre el 3D
+
+La escena utiliza transformaciones CSS 3D y geometría facetada en el navegador; no utiliza Three.js/WebGL ni modelos GLB. Se eligió esta implementación ligera para no introducir una dependencia pesada o alterar el lockfile.
+
+### Validación pendiente
+
+- Los cambios de código se guardaron en la rama indicada.
+- No se ejecutó `npm install`, `npm run build`, el servidor local ni Playwright desde esta conexión a GitHub.
+- Falta validar compilación, hidratación, render en navegador, breakpoints y el comportamiento conectado a Supabase con credenciales locales.
+- No se afirma que las pruebas visuales o funcionales hayan pasado. Ejecutarlas en el entorno local antes de fusionar.
