@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Brand from "@/components/Brand";
-import JewelScene from "@/components/JewelScene";
+import WebGLJewelScene from "@/components/WebGLJewelScene";
 
 const shots = [
   "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1800&q=85",
@@ -53,7 +53,7 @@ export default function Home() {
       <div className="home-hero-image"><Image src={shots[0]} alt="Joyería fina en una composición editorial" fill priority sizes="100vw" unoptimized /></div>
       <div className="home-hero-shade" />
       <div className="home-hero-glow" aria-hidden="true" />
-      <JewelScene className="jp-jewel-scene--home" />
+      <WebGLJewelScene className="jp-webgl-jewel--home" />
       <div className="shell home-hero-content">
         <div className="eyebrow"><i /> PLATAFORMA SAAS PARA JOYERÍAS</div>
         <h1>El arte de exhibir<br /><em>lo extraordinario.</em></h1>
