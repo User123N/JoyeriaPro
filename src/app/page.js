@@ -18,7 +18,7 @@ export default function Home() {
     <main className="home-shell">
       <header className="home-header">
         <div className="home-header-inner">
-          <Link href="/" className="home-brand" aria-label="JoyeriaPro, inicio"><Brand /></Link>
+          <Brand />
           <nav className="home-nav" aria-label="Navegación principal">
             <a href="#plataforma">Plataforma</a>
             <a href="#experiencia">Experiencia</a>
@@ -42,7 +42,7 @@ export default function Home() {
           </div>
           <div className="home-showcase">
             <div className="home-showcase-image">
-              <Image src={shots[0]} alt="Detalle de una pieza de joyería fina" fill priority sizes="(max-width: 900px) 100vw, 930px" />
+              <Image src={shots[0]} alt="Detalle de una pieza de joyería fina" fill priority sizes="(max-width: 900px) 100vw, 930px" unoptimized />
               <div className="home-showcase-caption"><small>Diseño · detalle · distinción</small><h2>Cada pieza merece su propio escenario.</h2></div>
             </div>
           </div>
@@ -62,7 +62,7 @@ export default function Home() {
 
       <section id="experiencia" className="home-section">
         <div className="home-container home-editorial">
-          <div className="home-editorial-image"><Image src={shots[1]} alt="Composición editorial de joyería" fill sizes="(max-width: 800px) 100vw, 50vw" /></div>
+          <div className="home-editorial-image"><Image src={shots[1]} alt="Composición editorial de joyería" fill sizes="(max-width: 800px) 100vw, 50vw" unoptimized /></div>
           <div className="home-editorial-copy">
             <small>Una experiencia sin fricción</small>
             <h2>Menos complejidad.<br /><em>Más distinción.</em></h2>
