@@ -205,7 +205,7 @@ function buildJewel() {
     tube: 14
   });
   addDiamond(positions, normals, colors, [0, 0.37, 0.03], 1.05);
-  addDiamond(positions, normals, colors, [0, 0.35, 0.4], 0.46, "champagne");
+  addDiamond(positions, normals, colors, [0, -0.43, 0.76], 0.2, "champagne");
 
   // Four prongs, each a small tapered metallic facet.
   for (let i = 0; i < 4; i += 1) {
@@ -367,7 +367,7 @@ export default function WebGLJewelScene({ className = "" }) {
     ];
     const buffers = [];
     for (const [location, values] of attributes) {
-      if (location < 0 || !location) continue;
+      if (location < 0) continue;
       const buffer = gl.createBuffer();
       if (!buffer) continue;
       gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
