@@ -4,30 +4,21 @@ export const STORE_TEMPLATES = [
     name: "Noir Atelier",
     description: "Obsidiana, oro cálido y fotografía dramática.",
     accent: "#c8a56a",
-    background: "#090a0d",
-    surface: "#121216",
-    text: "#f2eee7",
-    muted: "#aaa39a"
+    background: "#090a0d"
   },
   {
     id: "champagne",
     name: "Champagne Studio",
     description: "Marfil, arena y una estética editorial luminosa.",
     accent: "#9a7543",
-    background: "#f1ece3",
-    surface: "#e8dfd1",
-    text: "#26221d",
-    muted: "#71695f"
+    background: "#f1ece3"
   },
   {
     id: "modern",
     name: "Modern Gallery",
     description: "Grafito, acero y composición contemporánea.",
     accent: "#a9bec1",
-    background: "#10171b",
-    surface: "#192328",
-    text: "#edf2f1",
-    muted: "#a0acad"
+    background: "#10171b"
   }
 ];
 
@@ -53,25 +44,31 @@ export const DEFAULT_SITE_CONFIG = {
 };
 
 const templateIds = new Set(STORE_TEMPLATES.map((template) => template.id));
+const colorPattern = /^#[0-9a-f]{3,8}$/i;
 
 export function normalizeSiteConfig(value, business = {}) {
   const saved = value && typeof value === "object" && !Array.isArray(value) ? value : {};
   const template = templateIds.has(saved.template) ? saved.template : "noir";
   const preset = STORE_TEMPLATES.find((item) => item.id === template) || STORE_TEMPLATES[0];
-  const sections = saved.sections && typeof saved.sections === "object" ? saved.sections : {};
+  const sourceSections = saved.sections && typeof saved.sections === "object" ? saved.sections : {};
+  const sections = Object.fromEntries(
+    Object.keys(DEFAULT_SITE_CONFIG.sections).map((key) => [
+      key,
+      typeof sourceSections[key] === "boolean" ? sourceSections[key] : DEFAULT_SITE_CONFIG.sections[key]
+    ])
+  );
 
   return {
     ...DEFAULT_SITE_CONFIG,
-    ...preset,
     ...saved,
     template,
+    accent: colorPattern.test(saved.accent || "") ? saved.accent : preset.accent,
+    background: colorPattern.test(saved.background || "") ? saved.background : preset.background,
     heroTitle: saved.heroTitle || business.name || "",
     heroDescription: saved.heroDescription || business.description || DEFAULT_SITE_CONFIG.heroDescription,
+    storyTitle: saved.storyTitle || DEFAULT_SITE_CONFIG.storyTitle,
     storyText: saved.storyText || business.description || "",
-    sections: {
-      ...DEFAULT_SITE_CONFIG.sections,
-      ...sections
-    }
+    sections
   };
 }
 
