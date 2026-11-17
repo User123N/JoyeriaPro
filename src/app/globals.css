@@ -1,27 +1,83 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+:root {
+  color-scheme: dark;
 
-@layer base {
-  :root {
-    --bg-main: #0a0a0a;
-    --text-main: #f8f9fa;
-    --gold: #c5a059;
-    --gold-dark: #a18146;
-  }
-  body {
-    @apply bg-[var(--bg-main)] text-[var(--text-main)] antialiased;
-  }
+  /* Base palette */
+  --obsidian: #07070a;
+  --graphite: #121216;
+  --midnight: #0b0c10;
+  --gold: #c5a059;
+  --gold-light: #e8d3a0;
+  --gold-dark: #8f6f36;
+  --champagne: #d9c08a;
+  --ivory: #f5f1e8;
+  --silver: #b9bcc2;
+
+  /* Semantic tokens */
+  --bg: var(--obsidian);
+  --bg-elevated: #0f1014;
+  --surface: #121216;
+  --surface-glass: rgba(20, 20, 24, 0.55);
+  --card: #141418;
+  --primary: var(--gold);
+  --primary-strong: var(--gold-light);
+  --secondary: var(--silver);
+  --accent: var(--champagne);
+  --text: var(--ivory);
+  --text-primary: var(--ivory);
+  --text-secondary: #a6a19a;
+  --text-muted: #7d786f;
+  --border: rgba(245, 241, 232, 0.08);
+  --border-strong: rgba(245, 241, 232, 0.16);
+  --focus: var(--gold-light);
+  --success: #5fae82;
+  --warning: #d9a84e;
+  --error: #c75b4a;
+
+  /* Legacy aliases kept for existing CSS */
+  --bg-main: var(--bg);
+  --text-main: var(--text);
+  --line: var(--border);
+
+  /* Typography */
+  --font-display: ui-serif, Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --step--1: clamp(0.8rem, 0.78rem + 0.1vw, 0.875rem);
+  --step-0: clamp(1rem, 0.95rem + 0.2vw, 1.0625rem);
+  --step-1: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
+  --step-2: clamp(1.75rem, 1.5rem + 1.2vw, 2.25rem);
+  --step-3: clamp(2.25rem, 1.8rem + 2.2vw, 3.25rem);
+  --step-4: clamp(2.75rem, 2rem + 3.6vw, 4.5rem);
+
+  /* Radii, elevation, motion */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --shadow-soft: 0 18px 60px rgba(0, 0, 0, 0.32);
+  --shadow-lift: 0 30px 90px rgba(0, 0, 0, 0.45);
+  --ease: cubic-bezier(.22, .68, 0, 1);
+  --dur-fast: 160ms;
+  --dur-base: 320ms;
+  --dur-slow: 600ms;
 }
 
-@layer components {
-  .glass {
-    @apply bg-white/5 backdrop-blur-lg border border-white/10 shadow-lg;
-  }
-  .btn-gold {
-    @apply bg-[var(--gold)] text-black font-semibold px-6 py-2 rounded-full hover:bg-[var(--gold-dark)] transition-all;
-  }
-  .card-premium {
-    @apply bg-slate-900/50 backdrop-blur-md border border-white/5 rounded-2xl p-6 shadow-xl;
-  }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--step-0);
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, .font-display { font-family: var(--font-display); font-weight: 500; letter-spacing: -0.01em; }
+a { color: inherit; text-decoration: none; }
+button, input, select, textarea { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+::selection { background: rgba(197, 160, 89, .32); color: #fff; }
+img { max-width: 100%; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }

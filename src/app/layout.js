@@ -1,6 +1,7 @@
 import "./globals.css";
 import "./public.css";
 import "./editor.css";
+import "./dashboard.css";
 
 export const metadata = {
   title: "JoyeriaPro | Gestión comercial para joyerías",
@@ -9,10 +10,5 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  return (
-    <html lang="es">
-      <body>{children}</body>
-    </html>
-  );
+  return <html lang="es"><body>{children}</body></html>;
 }
-
