@@ -2,6 +2,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import PublicCatalog from "@/components/PublicCatalog";
+import JewelScene from "@/components/JewelScene";
 
 export const revalidate = 60;
 
@@ -55,6 +56,7 @@ export default async function PublicJewelryPage({ params }) {
       <div className="store-hero-shade" />
       <div className="store-hero-glow" aria-hidden="true" />
       <div className="store-hero-grain" />
+      <JewelScene className="jp-jewel-scene--store" />
       <div className="store-hero-copy shell">
         <div className="store-eyebrow"><span /> {content.tagline || "JOYERÍA · " + (business.city || "COLOMBIA")}</div>
         <h1>{content.heroTitle || business.name}</h1>
