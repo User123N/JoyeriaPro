@@ -67,13 +67,18 @@ Convertir JoyeriaPro en una plataforma de lujo digital: narrativa editorial, tec
 ### Añadido
 - Pruebas unitarias para las tres plantillas, compatibilidad con configuraciones antiguas, rechazo de IDs/colores inválidos y URLs HTTPS.
 
-### Pendiente en entorno de ejecución
-- npm.cmd test
-- npm.cmd run lint
-- npm.cmd run build
-- Pruebas de navegador en desktop/tablet/móvil y verificación con una cuenta real de cada rol.
-- Pruebas conectadas al proyecto Supabase correcto y datos reales de varios negocios.
-- Prueba de tienda pública con WebGL activado/desactivado y pérdida de contexto.
+### Validado en Vercel
+- El comando de build ejecuta primero npm run test.
+- Suite automática: 10 pruebas, 10 aprobadas y 0 fallidas.
+- Next.js 15.5.28 compiló correctamente; lint/check de tipos completados por next build.
+- Generación de páginas estáticas: 14/14.
+- Preview Vercel en estado READY; landing y pantallas de acceso consultadas y respondieron HTTP 200.
+
+### Pendiente
+- QA visual interactiva en desktop/tablet/móvil, estados de navegación y accesibilidad.
+- Pruebas de sesión real, roles y tiendas de prueba contra el proyecto Supabase correcto.
+- Verificación de la tienda pública con datos reales, y prueba de WebGL activado/desactivado y pérdida de contexto.
+- Ejecución separada de npm run lint en la máquina de desarrollo, aunque el build ya completó su fase de lint/check.
 
 ### Límites funcionales que no se deben ocultar
 - La escena es una malla 3D procedural WebGL, no un modelo GLB escaneado/fotorrealista importado.
