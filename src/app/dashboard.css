@@ -1,9 +1,8 @@
-.shell{width:min(1280px,calc(100% - 48px));margin-inline:auto}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:40px;padding:10px 16px;border:1px solid rgba(255,255,255,.14);border-radius:999px;background:rgba(255,255,255,.045);color:#eee;font-size:11px;font-weight:600;cursor:pointer;transition:transform .2s,border-color .2s,background .2s}
-.btn:hover{transform:translateY(-1px);border-color:rgba(227,201,141,.4)}
-.btn.primary{background:linear-gradient(135deg,#e4ca91,#b18b4e);border-color:transparent;color:#17120a}
-.btn.danger{color:#e6a0a0;border-color:rgba(210,100,100,.25);background:rgba(150,50,50,.08)}
-.btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
+.topbar .btn,.dashboard-shell .btn,.auth-wrap .btn,.manage-main .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:40px;padding:10px 16px;border:1px solid rgba(255,255,255,.14);border-radius:999px;background:rgba(255,255,255,.045);color:#eee;font-size:11px;font-weight:600;cursor:pointer;transition:transform .2s,border-color .2s,background .2s}
+.topbar .btn:hover,.dashboard-shell .btn:hover,.auth-wrap .btn:hover,.manage-main .btn:hover{transform:translateY(-1px);border-color:rgba(227,201,141,.4)}
+.topbar .btn.primary,.dashboard-shell .btn.primary,.auth-wrap .btn.primary,.manage-main .btn.primary{background:linear-gradient(135deg,#e4ca91,#b18b4e);border-color:transparent;color:#17120a}
+.manage-main .btn.danger{color:#e6a0a0;border-color:rgba(210,100,100,.25);background:rgba(150,50,50,.08)}
+.topbar .btn:disabled,.dashboard-shell .btn:disabled,.auth-wrap .btn:disabled,.manage-main .btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
 .topbar{height:78px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
 .top-actions{display:flex;align-items:center;gap:16px}.user-email{font-size:12px;color:var(--text-muted)}
 .dashboard-shell{padding-top:28px;padding-bottom:60px;min-height:calc(100vh - 78px)}
@@ -29,7 +28,7 @@
 .stat-card.warn strong,.text-warn{color:#e4b16f}
 .dashboard-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 .table-card h2,.settings-card h2{margin:9px 0 18px;font:400 22px Georgia,serif;color:var(--text)}
-.eyebrow{color:var(--gold-light);font-size:9px;letter-spacing:.16em;text-transform:uppercase}
+.manage-main .eyebrow,.empty-state .eyebrow{color:var(--gold-light);font-size:9px;letter-spacing:.16em;text-transform:uppercase}
 .entity-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:13px 0;border-top:1px solid rgba(255,255,255,.07);font-size:12px}
 .entity-row>div:first-child{min-width:0}.entity-row strong{color:#e8e1d4;font-weight:600}.entity-row small{display:block;margin-top:5px;color:#8e887e;font-size:10px;overflow-wrap:anywhere}
 .compact-actions{display:flex;align-items:center;gap:10px}.compact-actions .btn{min-height:32px;padding:6px 11px;font-size:10px}
@@ -40,7 +39,7 @@
 .inline-form input{flex:1 1 130px}.inline-form select{flex:1 1 170px}
 .settings-card form{display:grid;gap:15px;max-width:560px}.settings-card label{display:grid;gap:8px;color:#bcb5a9;font-size:11px}.settings-card textarea{resize:vertical}
 .empty-state{max-width:650px;margin:70px auto;padding:38px;border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.025);text-align:center}
-.empty-state h1{font:400 34px Georgia,serif}.empty-state p,.muted{color:#9b958a;font-size:12px;line-height:1.7}
+.empty-state h1{font:400 34px Georgia,serif}.empty-state p,.dashboard-shell .muted,.auth-wrap .muted{color:#9b958a;font-size:12px;line-height:1.7}
 .auth-wrap{min-height:calc(100vh - 78px);display:grid;grid-template-columns:1fr minmax(320px,460px);gap:50px;align-items:center;padding-top:45px;padding-bottom:65px}
 .auth-art{min-height:420px;display:grid;align-content:center;justify-items:center;border:1px solid var(--line);border-radius:22px;background:radial-gradient(circle at 50% 45%,rgba(197,160,89,.16),transparent 50%),#111}
 .auth-gem{font-size:100px;color:var(--gold-light);text-shadow:0 0 50px rgba(197,160,89,.3)}.auth-art p{color:#b5aea2;font:italic 20px Georgia,serif}
