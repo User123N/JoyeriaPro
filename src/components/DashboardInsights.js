@@ -8,21 +8,32 @@ const money = (value) => new Intl.NumberFormat("es-CO", {
   maximumFractionDigits: 0
 }).format(Number(value || 0));
 
+function dateKey(date, timezone) {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: timezone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).formatToParts(date);
+  const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+  return `${values.year}-${values.month}-${values.day}`;
+}
+
 export default function DashboardInsights({ sales, products, timezone = "America/Bogota" }) {
   const days = useMemo(() => {
-    const now = new Date();
-    const start = new Date(now);
-    start.setHours(0, 0, 0, 0);
-    start.setDate(start.getDate() - 6);
+    const todayParts = dateKey(new Date(), timezone).split("-").map(Number);
+    const start = new Date(Date.UTC(todayParts[0], todayParts[1] - 1, todayParts[2], 12));
+    start.setUTCDate(start.getUTCDate() - 6);
 
     const buckets = Array.from({ length: 7 }, (_, index) => {
       const date = new Date(start);
-      date.setDate(start.getDate() + index);
+      date.setUTCDate(start.getUTCDate() + index);
       return {
-        key: new Intl.DateTimeFormat("en-CA", {
-          timeZone: timezone, year: "numeric", month: "2-digit", day: "2-digit"
-        }).format(date),
-        label: date.toLocaleDateString("es-CO", { weekday: "short" }).replace(".", ""),
+        key: date.toISOString().slice(0, 10),
+        label: new Intl.DateTimeFormat("es-CO", {
+          timeZone: timezone,
+          weekday: "short"
+        }).format(date).replace(".", ""),
         total: 0,
         count: 0
       };
@@ -30,13 +41,10 @@ export default function DashboardInsights({ sales, products, timezone = "America
 
     const byKey = new Map(buckets.map((bucket) => [bucket.key, bucket]));
     for (const sale of sales || []) {
+      if (sale.status !== "paid") continue;
       const date = new Date(sale.created_at);
       if (Number.isNaN(date.getTime())) continue;
-      if (sale.status !== "paid") continue;
-      const key = new Intl.DateTimeFormat("en-CA", {
-        timeZone: timezone, year: "numeric", month: "2-digit", day: "2-digit"
-      }).format(date);
-      const bucket = byKey.get(key);
+      const bucket = byKey.get(dateKey(date, timezone));
       if (bucket) {
         bucket.total += Number(sale.total || 0);
         bucket.count += 1;
@@ -47,7 +55,7 @@ export default function DashboardInsights({ sales, products, timezone = "America
 
   const maxTotal = Math.max(1, ...days.map((day) => day.total));
   const lowStock = useMemo(() => (products || [])
-    .filter((product) => Number(product.stock || 0) <= Number(product.low_stock_threshold || 2))
+    .filter((product) => Number(product.stock || 0) <= Number(product.low_stock_threshold ?? 2))
     .sort((a, b) => Number(a.stock || 0) - Number(b.stock || 0))
     .slice(0, 5), [products]);
 
@@ -79,7 +87,7 @@ export default function DashboardInsights({ sales, products, timezone = "America
             </div>
           ))}
         </div>
-        <p className="jp-insight-footnote">Suma de ventas pagadas en el periodo, dentro de los registros recientes cargados por el panel.</p>
+        <p className="jp-insight-footnote">Suma de ventas pagadas de los últimos siete días, según la zona horaria del negocio y los registros recientes cargados por el panel.</p>
       </article>
 
       <article className="jp-insight-card jp-stock-insight">
@@ -105,7 +113,7 @@ export default function DashboardInsights({ sales, products, timezone = "America
             <p>No hay alertas de stock bajo en los productos cargados.</p>
           </div>
         )}
-        <p className="jp-insight-footnote">Se aplica el mínimo configurado para cada producto; cuando no existe, se usa el umbral predeterminado de 2 unidades.</p>
+        <p className="jp-insight-footnote">Se aplica el mínimo configurado por producto; cuando no existe, se usa el umbral predeterminado de 2 unidades.</p>
       </article>
     </section>
   );
