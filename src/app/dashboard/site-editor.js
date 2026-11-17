@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useState } from "react";
 import {
-  DEFAULT_SITE_CONFIG,
   STORE_TEMPLATES,
   normalizeSiteConfig,
   safeExternalImage
