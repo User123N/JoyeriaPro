@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import AtelierObjectGarden from "@/components/AtelierObjectGarden";
 import { useEffect, useMemo, useState } from "react";
 import {
   STORE_TEMPLATES,
@@ -244,6 +245,7 @@ export default function SiteEditor({ business, sb }) {
             <p>{draft.heroDescription}</p>
             <span className="preview-button">Explorar colección</span>
             <div className="preview-gem" aria-hidden="true">✦</div>
+            <AtelierObjectGarden className="atelier-object-garden--preview" />
           </section>
           {draft.showCatalog !== false && draft.sections?.catalog !== false && (
             <div className="preview-catalog">

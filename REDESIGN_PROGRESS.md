@@ -159,3 +159,16 @@ Actualización preparada en la rama `feat/luxury-atelier-complete`.
 - Next.js: compilación correcta; lint/check de tipos en build; 14/14 páginas estáticas generadas.
 - Landing, login, recuperar contraseña y restablecer contraseña responden HTTP 200 en preview.
 - Falta QA visual interactiva y validación de datos/sesiones reales en Supabase.
+
+---
+
+## Atelier Immersive Polish — 2026-11-17
+
+- Añadido src/app/atelier-immersive.css: textura ambiental por CSS, capas glass, radios amplios, reflejos, sombras y animaciones suaves para landing, tiendas, dashboard, editor y autenticación.
+- Reescrita la escena WebGL para incluir el anillo central, dos bandas secundarias, dos órbitas, gemas facetadas, perlas esféricas y engastes (más de 30 elementos geométricos).
+- Shaders con iluminación difusa, especular y rim light; la escena pausa su animación fuera de viewport o con la pestaña oculta, limita el pixel ratio y respeta movimiento reducido.
+- Añadido AtelierObjectGarden para decoración dimensional en el encabezado del dashboard y la vista previa del editor.
+- Sin dependencias adicionales y sin cambios en Supabase, Auth, RLS, RPC, migraciones o datos.
+- Preview Vercel READY; check GitHub success; 10/10 pruebas, build de producción y 14/14 rutas generadas.
+- Rutas landing y auth respondieron HTTP 200; CSS de preview confirma el nuevo sistema de radios y texturas.
+- QA visual con sesión autenticada y medición de rendimiento en equipos móviles sigue pendiente.
