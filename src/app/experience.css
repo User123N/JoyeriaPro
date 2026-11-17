@@ -27,9 +27,9 @@
   position: absolute;
   inset: 5%;
   transform-style: preserve-3d;
-  transform: translate3d(0, calc((.5 - var(--scroll-progress)) * 22px), 0)
-    rotateX(calc(var(--pointer-y) * -7deg + 2deg))
-    rotateY(calc(var(--pointer-x) * 10deg - 12deg));
+  transform: translate3d(0, var(--parallax-y, 0px), 0)
+    rotateX(var(--tilt-x, 2deg))
+    rotateY(var(--tilt-y, -12deg));
   transition: transform 500ms cubic-bezier(.2, .7, .1, 1);
 }
 .jp-jewel-orbit {
