@@ -8,7 +8,7 @@ const money = (value) => new Intl.NumberFormat("es-CO", {
   maximumFractionDigits: 0
 }).format(Number(value || 0));
 
-export default function DashboardInsights({ sales, products }) {
+export default function DashboardInsights({ sales, products, timezone = "America/Bogota" }) {
   const days = useMemo(() => {
     const now = new Date();
     const start = new Date(now);
@@ -19,7 +19,9 @@ export default function DashboardInsights({ sales, products }) {
       const date = new Date(start);
       date.setDate(start.getDate() + index);
       return {
-        key: [date.getFullYear(), date.getMonth(), date.getDate()].join("-"),
+        key: new Intl.DateTimeFormat("en-CA", {
+          timeZone: timezone, year: "numeric", month: "2-digit", day: "2-digit"
+        }).format(date),
         label: date.toLocaleDateString("es-CO", { weekday: "short" }).replace(".", ""),
         total: 0,
         count: 0
@@ -30,7 +32,10 @@ export default function DashboardInsights({ sales, products }) {
     for (const sale of sales || []) {
       const date = new Date(sale.created_at);
       if (Number.isNaN(date.getTime())) continue;
-      const key = [date.getFullYear(), date.getMonth(), date.getDate()].join("-");
+      if (sale.status !== "paid") continue;
+      const key = new Intl.DateTimeFormat("en-CA", {
+        timeZone: timezone, year: "numeric", month: "2-digit", day: "2-digit"
+      }).format(date);
       const bucket = byKey.get(key);
       if (bucket) {
         bucket.total += Number(sale.total || 0);
@@ -38,7 +43,7 @@ export default function DashboardInsights({ sales, products }) {
       }
     }
     return buckets;
-  }, [sales]);
+  }, [sales, timezone]);
 
   const maxTotal = Math.max(1, ...days.map((day) => day.total));
   const lowStock = useMemo(() => (products || [])
@@ -74,7 +79,7 @@ export default function DashboardInsights({ sales, products }) {
             </div>
           ))}
         </div>
-        <p className="jp-insight-footnote">Cálculo sobre las ventas recientes cargadas por el panel; no representa tráfico ni conversiones web.</p>
+        <p className="jp-insight-footnote">Suma de ventas pagadas en el periodo, dentro de los registros recientes cargados por el panel.</p>
       </article>
 
       <article className="jp-insight-card jp-stock-insight">
