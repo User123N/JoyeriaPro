@@ -53,6 +53,7 @@ export default async function PublicJewelryPage({ params }) {
     <section className="store-hero" id="inicio">
       <div className="store-hero-image" aria-hidden="true"><Image src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=2200&q=90" alt="" fill priority sizes="100vw" unoptimized /></div>
       <div className="store-hero-shade" />
+      <div className="store-hero-glow" aria-hidden="true" />
       <div className="store-hero-grain" />
       <div className="store-hero-copy shell">
         <div className="store-eyebrow"><span /> {content.tagline || "JOYERÍA · " + (business.city || "COLOMBIA")}</div>
@@ -85,16 +86,19 @@ export default async function PublicJewelryPage({ params }) {
         <div className="store-section-heading"><div><span className="eyebrow">HECHAS PARA QUEDARSE</span><h2>Piezas seleccionadas</h2></div><span className="section-aside">{collection.length} {collection.length === 1 ? "pieza" : "piezas"}</span></div>
         {collection.length ? <PublicCatalog products={collection} business={business} /> : <div className="catalog-empty"><span>✧</span><h3>Estamos preparando la colección</h3><p>Muy pronto encontrarás nuevas piezas en este espacio.</p></div>}
       </section>
+    </>}
 
-      <section className="store-story" id="historia">
-        <div className="story-image"><Image src={gallery[0]?.image_url || "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=1400&q=85"} alt={gallery[0]?.name || `Una pieza de ${business.name}`} fill sizes="(max-width: 800px) 100vw, 50vw" unoptimized /></div>
-        <div className="story-copy"><span className="eyebrow">{business.name.toUpperCase()} · {business.city || "COLOMBIA"}</span><h2>La belleza está<br />en <em>los detalles.</em></h2><p>{business.description || "Cada pieza guarda una intención. Descubre una colección elegida con sensibilidad por el diseño y el valor de lo que permanece."}</p><span className="story-signature">{business.name}</span></div>
-      </section>
+    <section className="store-story" id="historia">
+      <div className="story-image"><Image src={gallery[0]?.image_url || "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=1400&q=85"} alt={gallery[0]?.name || `Una pieza de ${business.name}`} fill sizes="(max-width: 800px) 100vw, 50vw" unoptimized /></div>
+      <div className="story-copy"><span className="eyebrow">{business.name.toUpperCase()} · {business.city || "COLOMBIA"}</span><h2>La belleza está<br />en <em>los detalles.</em></h2><p>{business.description || "Cada pieza guarda una intención. Descubre una colección elegida con sensibilidad por el diseño y el valor de lo que permanece."}</p><span className="story-signature">{business.name}</span></div>
+    </section>
+
+    <>
 
       {gallery.length > 1 && <section className="store-gallery shell"><div className="gallery-heading"><span className="eyebrow">UN VISTAZO DE CERCA</span><h2>Materia, luz y forma.</h2></div><div className="gallery-grid">{gallery.slice(1).map((product, index) => <figure className={`gallery-frame gallery-frame-${index + 1}`} key={product.id}><Image src={product.image_url} alt={product.name} fill sizes="(max-width: 700px) 80vw, 34vw" unoptimized /><figcaption>{product.name}<span>{product.material || product.category?.name || "JOYERÍA"}</span></figcaption></figure>)}</div></section>}
 
-      <section className="store-contact" id="contacto"><div className="contact-orbit" aria-hidden="true">✦</div><span className="eyebrow">UNA CONVERSACIÓN, UNA PIEZA ESPECIAL</span><h2>Encuentra algo<br /><em>que hable de ti.</em></h2><p>Conoce más sobre la colección directamente con {business.name}.</p>{whatsapp ? <a className="btn primary" href={`${whatsapp}?text=${encodeURIComponent(`Hola, quisiera conocer la colección de ${business.name}.`)}`} target="_blank" rel="noreferrer">Hablar con la joyería <span>↗</span></a> : business.phone ? <a className="btn primary" href={`tel:${business.phone}`}>Llamar a la joyería <span>↗</span></a> : <span className="contact-address">{[business.address, business.city].filter(Boolean).join(" · ")}</span>}</section>
-    </>}
+      <section className="store-contact" id="contacto"><div className="contact-orbit" aria-hidden="true">✦</div><span className="eyebrow">UNA CONVERSACIÓN, UNA PIEZA ESPECIAL</span><h2>Encuentra algo<br /><em>que hable de ti.</em></h2><p>Conoce más sobre {business.name} y su trabajo directamente con la joyería.</p>{whatsapp ? <a className="btn primary" href={`${whatsapp}?text=${encodeURIComponent(`Hola, quisiera conocer más sobre ${business.name}.`)}`} target="_blank" rel="noreferrer">Hablar con la joyería <span aria-hidden="true">↗</span></a> : business.phone ? <a className="btn primary" href={`tel:${business.phone}`}>Llamar a la joyería <span aria-hidden="true">↗</span></a> : <span className="contact-address">{[business.address, business.city].filter(Boolean).join(" · ")}</span>}</section>
+    </>
 
     <footer className="store-footer"><div className="store-footer-main shell"><a href="#inicio" className="store-brand"><span className="store-brand-mark">✦</span><span>{business.name}<small>{business.city || "JOYERÍA"}</small></span></a><div className="footer-address">{[business.address, business.city, business.phone].filter(Boolean).join(" · ")}</div><a className="footer-top" href="#inicio">Volver arriba ↑</a></div><div className="store-footer-bottom shell"><span>© {new Date().getFullYear()} {business.name}</span><span>Una casa de joyería seleccionada con cuidado</span><span>Diseñado con JoyeriaPro</span></div></footer>
   </main>;
