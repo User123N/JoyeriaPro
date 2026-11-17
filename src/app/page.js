@@ -170,7 +170,7 @@ export default function Home() {
           <p>Sin promesas de roadmap: estas son las funciones implementadas en el producto.</p>
         </div>
         <div className="capability-grid jp-reveal">
-          {capabilities.map((item) => <article className="capability jp-card" key={item.t}>
+          {capabilities.map((item) => <article className="capability" key={item.t}>
             <span className="capability-k jp-badge">{item.k}</span>
             <h3>{item.t}</h3>
             <p>{item.d}</p>
