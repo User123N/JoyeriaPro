@@ -1,86 +1,101 @@
-import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import Brand from "@/components/Brand";
+import PublicCatalog from "@/components/PublicCatalog";
 
 export const revalidate = 60;
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  return { title: `${slug} | JoyeriaPro` };
+  return { title: `${slug} | JoyeriaPro`, description: "Descubre una colección de joyería seleccionada con cuidado." };
 }
 
 export default async function PublicJewelryPage({ params }) {
   const { slug } = await params;
   const sb = await createClient();
-  const { data: business, error } = await sb
-    .from("businesses")
+  const { data: business, error } = await sb.from("businesses")
     .select("id,name,slug,status,description,logo_url,phone,address,city")
-    .eq("slug", slug)
-    .eq("status", "active")
-    .maybeSingle();
-
+    .eq("slug", slug).eq("status", "active").maybeSingle();
   if (error || !business) notFound();
 
-  const [{ data: products }, { data: content }] = await Promise.all([
-    sb.from("products")
-      .select("id,name,description,reference,material,price,image_url,stock,category:categories(name)")
-      .eq("business_id", business.id)
-      .eq("available", true)
-      .gt("stock", 0)
-      .order("created_at", { ascending: false }),
+  const [{ data: products }, { data: site }] = await Promise.all([
+    sb.from("products").select("id,name,description,reference,material,price,image_url,stock,category:categories(name)")
+      .eq("business_id", business.id).eq("available", true).gt("stock", 0).order("created_at", { ascending: false }),
     sb.rpc("get_published_site_config", { target_slug: slug })
   ]);
 
-  const site = content || {};
-  const catalog = site.showCatalog !== false;
-  const formatPrice = (price) => new Intl.NumberFormat("es-CO", {
-    style: "currency", currency: "COP", maximumFractionDigits: 0
-  }).format(price || 0);
+  const content = site || {};
+  const collection = products || [];
+  const categories = [...new Set(collection.map((product) => product.category?.name).filter(Boolean))];
+  const gallery = collection.filter((product) => product.image_url).slice(0, 4);
+  const showCatalog = content.showCatalog !== false;
+  const phone = (business.phone || "").replace(/\D/g, "");
+  const whatsapp = phone ? `https://wa.me/${phone.length === 10 ? `57${phone}` : phone}` : null;
 
-  return (
-    <main className="public-page" style={{ "--site-accent": site.accent || "#c8a56a", "--site-background": site.background || "#090a0d" }}>
-      <header className="shell topbar">
-        <Brand />
-        <nav className="top-actions">
-          <a className="nav-link" href="#catalogo">Catálogo</a>
-          <Link className="btn" href="/login">Acceso administrativo</Link>
+  return <main className="storefront" style={{ "--site-accent": content.accent || "#c6a15b", "--site-background": content.background || "#080808" }}>
+    <header className="store-header">
+      <div className="store-header-inner">
+        <a href="#inicio" className="store-brand" aria-label={`${business.name}, inicio`}>
+          {business.logo_url ? <Image src={business.logo_url} alt="" width={42} height={42} unoptimized /> : <span className="store-brand-mark">✦</span>}
+          <span>{business.name}<small>{business.city || "JOYERÍA"}</small></span>
+        </a>
+        <nav className="store-nav" aria-label="Navegación principal">
+          {showCatalog && <a href="#coleccion">Colección</a>}
+          {categories.length > 0 && showCatalog && <a href="#categorias">Categorías</a>}
+          <a href="#historia">La casa</a>
         </nav>
-      </header>
-      <section className="shell public-hero">
-        <div>
-          <div className="eyebrow">{site.tagline || business.city || "Joyería"}</div>
-          <h1>{site.heroTitle || business.name}</h1>
-          <p className="lead">{site.heroDescription || business.description || "Piezas seleccionadas para acompañar tus momentos importantes."}</p>
-          <div className="public-contact">
-            {business.address && <span>⌖ {business.address}</span>}
-            {business.city && <span>{business.city}</span>}
-            {business.phone && <span>☎ {business.phone}</span>}
-          </div>
-          {catalog && <a className="btn primary" href="#catalogo">Descubrir colección</a>}
+        <div className="store-header-action">
+          {whatsapp ? <a className="btn store-contact-button" href={`${whatsapp}?text=${encodeURIComponent(`Hola, quisiera conocer más sobre ${business.name}.`)}`} target="_blank" rel="noreferrer">Contactar <span>↗</span></a> : <a className="btn store-contact-button" href="#contacto">Contactar <span>↗</span></a>}
         </div>
-        <div className="public-mark">✦</div>
-      </section>
-      {catalog && <section className="shell public-section" id="catalogo">
-        <div className="section-heading">
-          <div><div className="eyebrow">Colección</div><h2>Joyas disponibles</h2></div>
-          <span className="muted">{products?.length || 0} piezas</span>
-        </div>
-        {products?.length ? <div className="public-products">
-          {products.map((product) => <article className="public-product" key={product.id}>
-            {product.image_url ? <Image src={product.image_url} alt={product.name} width={900} height={900} unoptimized /> : <div className="product-placeholder">✦</div>}
-            <div className="product-copy">
-              <span className="eyebrow">{product.category?.name || product.material || "Pieza seleccionada"}</span>
-              <h3>{product.name}</h3>
-              {product.description && <p>{product.description}</p>}
-              <div className="product-meta"><strong>{formatPrice(product.price)}</strong>{product.reference && <small>Ref. {product.reference}</small>}</div>
-            </div>
-          </article>)}
-        </div> : <div className="empty-state"><h2>Catálogo en preparación</h2><p className="muted">Muy pronto encontrarás aquí nuestras piezas disponibles.</p></div>}
-      </section>}
-      <footer className="footer"><div className="shell footer-row"><span>{business.name}</span><span>{[business.address, business.city, business.phone].filter(Boolean).join(" · ")}</span></div></footer>
-    </main>
-  );
-}
+      </div>
+    </header>
 
+    <section className="store-hero" id="inicio">
+      <div className="store-hero-image" aria-hidden="true"><Image src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=2200&q=90" alt="" fill priority sizes="100vw" unoptimized /></div>
+      <div className="store-hero-shade" />
+      <div className="store-hero-grain" />
+      <div className="store-hero-copy shell">
+        <div className="store-eyebrow"><span /> {content.tagline || "JOYERÍA · " + (business.city || "COLOMBIA")}</div>
+        <h1>{content.heroTitle || business.name}</h1>
+        <p>{content.heroDescription || business.description || "Piezas creadas para acompañar los momentos que merecen quedarse contigo."}</p>
+        {showCatalog && <a className="store-hero-link" href="#coleccion">Explorar la colección <span>↓</span></a>}
+      </div>
+      <div className="hero-caption"><span>01 / {business.city || "COLOMBIA"}</span><span>JOYAS CON SIGNIFICADO</span></div>
+      <div className="hero-index">J — 01</div>
+    </section>
+
+    {showCatalog && <>
+      <section className="store-intro shell" id="coleccion">
+        <div className="store-intro-label"><span className="eyebrow">OBJETOS PARA ATESORAR</span><span className="intro-rule" /></div>
+        <div className="store-intro-copy"><h2>El tiempo pasa.<br /><em>Lo extraordinario permanece.</em></h2><p>Una selección de piezas que une materia, oficio y memoria. Encuentra la que cuenta tu historia.</p></div>
+      </section>
+
+      {categories.length > 0 && <section className="store-categories shell" id="categorias">
+        <div className="store-section-heading"><div><span className="eyebrow">UNIVERSOS DE JOYERÍA</span><h2>Explora por colección</h2></div><span className="section-aside">{categories.length} colecciones</span></div>
+        <div className="category-cards">{categories.slice(0, 5).map((category, index) => {
+          const count = collection.filter((product) => product.category?.name === category).length;
+          return <a className={`category-card category-card-${index + 1}`} href="#catalog-grid" key={category}>
+            <span className="category-card-index">0{index + 1}</span><span className="category-card-shape" aria-hidden="true">✧</span>
+            <div><small>{String(count).padStart(2, "0")} PIEZAS</small><h3>{category}</h3></div><span className="category-arrow">↗</span>
+          </a>;
+        })}</div>
+      </section>}
+
+      <section className="store-catalog shell" id="catalog-grid">
+        <div className="store-section-heading"><div><span className="eyebrow">HECHAS PARA QUEDARSE</span><h2>Piezas seleccionadas</h2></div><span className="section-aside">{collection.length} {collection.length === 1 ? "pieza" : "piezas"}</span></div>
+        {collection.length ? <PublicCatalog products={collection} business={business} /> : <div className="catalog-empty"><span>✧</span><h3>Estamos preparando la colección</h3><p>Muy pronto encontrarás nuevas piezas en este espacio.</p></div>}
+      </section>
+
+      <section className="store-story" id="historia">
+        <div className="story-image"><Image src={gallery[0]?.image_url || "https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=1400&q=85"} alt={gallery[0]?.name || `Una pieza de ${business.name}`} fill sizes="(max-width: 800px) 100vw, 50vw" unoptimized /></div>
+        <div className="story-copy"><span className="eyebrow">{business.name.toUpperCase()} · {business.city || "COLOMBIA"}</span><h2>La belleza está<br />en <em>los detalles.</em></h2><p>{business.description || "Cada pieza guarda una intención. Descubre una colección elegida con sensibilidad por el diseño y el valor de lo que permanece."}</p><span className="story-signature">{business.name}</span></div>
+      </section>
+
+      {gallery.length > 1 && <section className="store-gallery shell"><div className="gallery-heading"><span className="eyebrow">UN VISTAZO DE CERCA</span><h2>Materia, luz y forma.</h2></div><div className="gallery-grid">{gallery.slice(1).map((product, index) => <figure className={`gallery-frame gallery-frame-${index + 1}`} key={product.id}><Image src={product.image_url} alt={product.name} fill sizes="(max-width: 700px) 80vw, 34vw" unoptimized /><figcaption>{product.name}<span>{product.material || product.category?.name || "JOYERÍA"}</span></figcaption></figure>)}</div></section>}
+
+      <section className="store-contact" id="contacto"><div className="contact-orbit" aria-hidden="true">✦</div><span className="eyebrow">UNA CONVERSACIÓN, UNA PIEZA ESPECIAL</span><h2>Encuentra algo<br /><em>que hable de ti.</em></h2><p>Conoce más sobre la colección directamente con {business.name}.</p>{whatsapp ? <a className="btn primary" href={`${whatsapp}?text=${encodeURIComponent(`Hola, quisiera conocer la colección de ${business.name}.`)}`} target="_blank" rel="noreferrer">Hablar con la joyería <span>↗</span></a> : business.phone ? <a className="btn primary" href={`tel:${business.phone}`}>Llamar a la joyería <span>↗</span></a> : <span className="contact-address">{[business.address, business.city].filter(Boolean).join(" · ")}</span>}</section>
+    </>}
+
+    <footer className="store-footer"><div className="store-footer-main shell"><a href="#inicio" className="store-brand"><span className="store-brand-mark">✦</span><span>{business.name}<small>{business.city || "JOYERÍA"}</small></span></a><div className="footer-address">{[business.address, business.city, business.phone].filter(Boolean).join(" · ")}</div><a className="footer-top" href="#inicio">Volver arriba ↑</a></div><div className="store-footer-bottom shell"><span>© {new Date().getFullYear()} {business.name}</span><span>Una casa de joyería seleccionada con cuidado</span><span>Diseñado con JoyeriaPro</span></div></footer>
+  </main>;
+}
