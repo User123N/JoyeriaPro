@@ -302,3 +302,13 @@
   .editor-fields-inline,.jp-settings-grid { grid-template-columns:1fr; }
   .compact-actions .btn { min-height:36px; }
 }
+
+.jp-webgl-jewel--auth {
+  position: relative;
+  left: auto;
+  right: auto;
+  top: auto;
+  width: min(78%, 310px);
+  margin: 0 auto -1rem;
+  opacity: .92;
+}
