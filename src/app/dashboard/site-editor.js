@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import {
   STORE_TEMPLATES,
@@ -160,7 +161,7 @@ export default function SiteEditor({ business, sb }) {
 
         {previewImage && (
           <div className="jp-editor-image-preview">
-            <img src={previewImage} alt="Vista previa de la portada seleccionada" />
+            <Image src={previewImage} alt="Vista previa de la portada seleccionada" width={168} height={128} unoptimized />
             <span>Imagen de portada válida</span>
           </div>
         )}
