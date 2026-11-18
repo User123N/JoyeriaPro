@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import PublicCatalog from "@/components/PublicCatalog";
 import WebGLJewelScene from "@/components/WebGLJewelScene";
+import WhatsAppButton from "@/components/WhatsAppButton";
 import MaisonHeader from "@/components/MaisonHeader";
 import MaisonCategoryGrid from "@/components/MaisonCategoryGrid";
 import { normalizeSiteConfig, safeExternalImage } from "@/lib/store-themes";
@@ -18,7 +19,7 @@ const DEMO_BUSINESS = {
   description: "Joyería de autor: piezas cuidadosamente seleccionadas para celebrar lo extraordinario.",
   city: "Cartagena",
   address: "Centro Histórico, Cartagena, Colombia",
-  phone: "",
+  phone: process.env.NEXT_PUBLIC_WHATSAPP || "",
   logo_url: ""
 };
 
@@ -72,6 +73,7 @@ function MaisonAureliaDemo({ business, collection, content }) {
   return (
     <main className="storefront storefront--noir maison-storefront" style={{ "--site-accent": content.accent, "--site-background": content.background, "--site-foreground": content.text }}>
       <div className="maison-texture" aria-hidden="true" />
+      <WhatsAppButton phone={business.phone} name={business.name} />
       <MaisonHeader />
 
       <section className="maison-hero" id="inicio">
@@ -285,6 +287,6 @@ export default async function PublicJewelryPage({ params }) {
 
     {content.sections.contact && <section className="store-contact" id="contacto"><div className="contact-orbit" aria-hidden="true">✦</div><span className="eyebrow">UNA CONVERSACIÓN, UNA PIEZA ESPECIAL</span><h2>Encuentra algo<br /><em>que hable de ti.</em></h2><p>Conoce más sobre {business.name} y su trabajo directamente con la joyería.</p>{whatsapp ? <a className="btn primary" href={whatsapp + "?text=" + encodeURIComponent("Hola, quisiera conocer más sobre " + business.name + ".")} target="_blank" rel="noreferrer">Hablar con la joyería <span aria-hidden="true">↗</span></a> : business.phone ? <a className="btn primary" href={"tel:" + business.phone}>Llamar a la joyería <span aria-hidden="true">↗</span></a> : <span className="contact-address">{[business.address, business.city].filter(Boolean).join(" · ")}</span>}</section>}
 
-    <footer className="store-footer"><div className="store-footer-main shell"><a href="#inicio" className="store-brand"><span className="store-brand-mark">✦</span><span>{business.name}<small>{business.city || "JOYERÍA"}</small></span></a><div className="footer-address">{[business.address, business.city, business.phone].filter(Boolean).join(" · ")}</div><a className="footer-top" href="#inicio">Volver arriba ↑</a></div><div className="store-footer-bottom shell"><span>© {new Date().getFullYear()} {business.name}</span><span>Una casa de joyería seleccionada con cuidado</span><span>Diseñado con JoyeriaPro</span></div></footer>
+    <WhatsAppButton phone={business.phone} name={business.name} /><footer className="store-footer"><div className="store-footer-main shell"><a href="#inicio" className="store-brand"><span className="store-brand-mark">✦</span><span>{business.name}<small>{business.city || "JOYERÍA"}</small></span></a><div className="footer-address">{[business.address, business.city, business.phone].filter(Boolean).join(" · ")}</div><a className="footer-top" href="#inicio">Volver arriba ↑</a></div><div className="store-footer-bottom shell"><span>© {new Date().getFullYear()} {business.name}</span><span>Una casa de joyería seleccionada con cuidado</span><span>Diseñado con JoyeriaPro</span></div></footer>
   </main>;
 }

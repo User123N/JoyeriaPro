@@ -41,7 +41,11 @@ void main() {
 `;
 
 const fragmentShader = `
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+#else
 precision mediump float;
+#endif
 uniform float uTime;
 varying vec3 vNormal;
 varying vec3 vColor;
@@ -58,13 +62,13 @@ void main() {
   float diffuse = max(dot(n, lightKey), 0.0);
   float fill = max(dot(n, lightFill), 0.0);
   float rimLight = pow(max(dot(n, lightRim), 0.0), 2.0);
-  float specular = pow(max(dot(n, halfVector), 0.0), 54.0);
+  float specular = pow(max(dot(n, halfVector), 0.0), 90.0);
   float rim = pow(1.0 - max(dot(n, viewDirection), 0.0), 2.4);
   float glint = 0.94 + 0.06 * sin(uTime * 1.1 + vPosition.y * 5.0 + vPosition.x * 3.0);
 
-  vec3 color = vColor * (0.2 + diffuse * 0.76 + fill * 0.18);
-  color += vec3(1.0, 0.92, 0.74) * specular * 0.92 * glint;
-  color += vec3(0.82, 0.9, 1.0) * rim * 0.24;
+  vec3 color = vColor * (0.34 + diffuse * 0.82 + fill * 0.3);
+  color += vec3(1.0, 0.92, 0.74) * specular * 1.55 * glint;
+  color += vec3(0.82, 0.9, 1.0) * rim * 0.42;
   color += vec3(0.94, 0.68, 0.34) * rimLight * 0.12;
   gl_FragColor = vec4(color, 1.0);
 }
@@ -407,7 +411,7 @@ export default function WebGLJewelScene({ className = "" }) {
     const resize = () => {
       const width = Math.max(1, host.clientWidth);
       const height = Math.max(1, host.clientHeight);
-      const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.35);
+      const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = Math.round(width * pixelRatio);
       canvas.height = Math.round(height * pixelRatio);
       gl.viewport(0, 0, canvas.width, canvas.height);
@@ -482,6 +486,7 @@ export default function WebGLJewelScene({ className = "" }) {
     host.addEventListener("pointermove", onPointerMove, { passive: true });
     host.addEventListener("pointerleave", onPointerLeave);
     canvas.addEventListener("webglcontextlost", onContextLost, false);
+    canvas.addEventListener("webglcontextrestored", () => window.location.reload(), false);
     document.addEventListener("visibilitychange", onVisibility);
     reduceMotion.addEventListener?.("change", onMotionChange);
     if (observer) observer.observe(host);
