@@ -5,6 +5,7 @@ import "./dashboard.css";
 import "./experience.css";
 import "./atelier.css";
 import "./atelier-immersive.css";
+import "./maison-aurelia.css";
 
 export const metadata = {
   title: "JoyeriaPro | Gestión comercial para joyerías",
