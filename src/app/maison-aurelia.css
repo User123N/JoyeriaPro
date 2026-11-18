@@ -233,7 +233,7 @@
 .maison-intro__label { display: grid; align-content: start; gap: 1.6rem; }
 .maison-intro__rule { width: 100%; max-width: 220px; height: 1px; background: linear-gradient(90deg,var(--maison-gold),transparent); }
 .maison-intro__number { color: rgba(225,207,176,.38); font-size: .5rem; letter-spacing: .22em; }
-.maison-intro__body { display: grid; grid-template-columns: minmax(0,1fr) minmax(220px,.62fr); align-items: end; gap: 2.5rem; }
+.maison-intro__body { display: grid; grid-template-columns: minmax(0,1fr) minmax(220px,.62fr); align-items: flex-end; gap: 2.5rem; }
 .maison-intro h2, .maison-section-heading h2, .maison-story h2, .maison-contact h2 {
   margin: 0;
   color: #f2eade;
@@ -246,7 +246,7 @@
 .maison-section-heading {
   display: flex;
   justify-content: space-between;
-  align-items: end;
+  align-items: flex-end;
   gap: 2rem;
   margin-bottom: 2rem;
 }
@@ -261,7 +261,7 @@
   overflow: hidden;
   isolation: isolate;
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   padding: 1.4rem;
   border: 1px solid rgba(225,195,145,.17);
   border-radius: 23px;
@@ -426,7 +426,7 @@
   .maison-nav { display: none; }
   .maison-brand__mark { width: 38px; height: 38px; }
   .maison-header__cta { min-height: 38px; padding-inline: .85rem; font-size: .5rem; }
-  .maison-hero { min-height: 710px; align-items: end; }
+  .maison-hero { min-height: 710px; align-items: flex-end; }
   .maison-hero__image img { object-position: 63% center; }
   .maison-hero__veil { background: linear-gradient(0deg,rgba(6,5,4,.98),rgba(6,5,4,.78) 43%,rgba(6,5,4,.12) 100%); }
   .maison-hero__copy { width: auto; margin: 0; padding: 21rem 1.7rem 7.5rem; }
