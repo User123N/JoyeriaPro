@@ -479,3 +479,187 @@
   .maison-hero__image img { animation: none; }
   .maison-category, .maison-category__image img, .maison-button { transition: none; }
 }
+
+
+/* ============================================================
+   MAISON AURELIA — ENHANCED LUXURY LAYER (2026)
+   ============================================================ */
+
+.maison-header {
+  transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+.maison-header.is-scrolled {
+  background: rgba(8, 7, 6, 0.92);
+  border-bottom-color: rgba(201, 163, 101, 0.24);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55);
+}
+
+.maison-header__actions {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.maison-menu-toggle {
+  display: none;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(201, 163, 101, 0.38);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--maison-gold-light);
+  place-items: center;
+  align-content: center;
+  gap: 5px;
+  cursor: pointer;
+}
+.maison-menu-toggle span {
+  display: block;
+  width: 16px;
+  height: 1.5px;
+  background: currentColor;
+  transition: transform 0.28s ease;
+}
+.maison-menu-toggle[aria-expanded="true"] span:first-child {
+  transform: translateY(3.25px) rotate(45deg);
+}
+.maison-menu-toggle[aria-expanded="true"] span:last-child {
+  transform: translateY(-3.25px) rotate(-45deg);
+}
+
+.maison-mobile-nav {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  padding: 1.4rem 1.25rem 1.8rem;
+  background: rgba(8, 7, 6, 0.96);
+  border-bottom: 1px solid rgba(201, 163, 101, 0.24);
+  backdrop-filter: blur(26px);
+  -webkit-backdrop-filter: blur(26px);
+  display: grid;
+  gap: 1.25rem;
+  box-shadow: 0 28px 60px rgba(0, 0, 0, 0.72);
+}
+.maison-mobile-nav nav {
+  display: grid;
+}
+.maison-mobile-nav nav a {
+  display: grid;
+  grid-template-columns: 32px 1fr auto;
+  align-items: center;
+  padding: 0.85rem 0.25rem;
+  border-bottom: 1px solid rgba(244, 238, 228, 0.08);
+  color: var(--maison-cream);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.15rem;
+}
+.maison-mobile-nav nav a small {
+  color: var(--maison-gold);
+  font-family: Arial, sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+}
+.maison-mobile-nav nav a i {
+  font-style: normal;
+  color: var(--maison-gold-light);
+  font-size: 0.85rem;
+}
+
+.maison-intro h2 em,
+.maison-section-heading h2 em,
+.maison-contact h2 em {
+  background: linear-gradient(110deg, #fff3d6 0%, #efd9ae 42%, #c9a365 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.product-material {
+  margin: -0.35rem 0 0.55rem;
+  color: var(--maison-muted);
+  font-size: 0.74rem;
+}
+.stock-label.is-low {
+  background: rgba(201, 163, 101, 0.22);
+  border-color: rgba(239, 217, 174, 0.6);
+  color: #fff2d6;
+}
+.catalog-search-clear {
+  border: 0;
+  background: transparent;
+  color: var(--maison-muted);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0 0.25rem;
+}
+.catalog-search-clear:hover {
+  color: var(--maison-gold-light);
+}
+
+.dialog-media {
+  display: flex;
+  flex-direction: column;
+  background: #0c0b09;
+}
+.dialog-media .dialog-image {
+  flex: 1;
+  min-height: 400px;
+}
+.dialog-thumbs {
+  display: flex;
+  gap: 0.65rem;
+  padding: 0.9rem 1.1rem;
+  border-top: 1px solid rgba(225, 201, 161, 0.12);
+  background: rgba(8, 7, 6, 0.85);
+}
+.dialog-thumbs button {
+  position: relative;
+  width: 62px;
+  height: 62px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(225, 201, 161, 0.22);
+  background: #14120e;
+  cursor: pointer;
+  opacity: 0.62;
+  transition: opacity 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+.dialog-thumbs button:hover,
+.dialog-thumbs button.is-active {
+  opacity: 1;
+  border-color: var(--maison-gold);
+  transform: translateY(-2px);
+}
+.dialog-thumbs button img {
+  object-fit: cover;
+}
+.product-details dd.is-available {
+  color: #ebd09e;
+}
+
+@media (max-width: 760px) {
+  .maison-menu-toggle {
+    display: grid;
+  }
+  .maison-hero {
+    display: grid;
+    grid-template-rows: 230px auto;
+    min-height: auto;
+  }
+  .maison-hero__jewel {
+    position: relative;
+    top: 0.6rem;
+    right: auto;
+    margin: 0 auto;
+    width: min(68vw, 270px);
+    opacity: 0.94;
+  }
+  .maison-hero__copy {
+    padding: 0.5rem 1.4rem 5.4rem;
+  }
+  .dialog-media .dialog-image {
+    min-height: 290px;
+  }
+}
